@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Completely hide Google Translate banner */
+.goog-te-banner-frame.skiptranslate {
+  display: none !important;
+}
+
+/* Remove spacing caused by the banner */
+body {
+  top: 0px !important;
+}
+
+/* Hide Google branding */
+.goog-logo-link {
+  display: none !important;
+}
+
+/* Hide "Powered by Google" text */
+.goog-te-gadget span {
+  display: none !important;
+}
+
+/* Hide Google translate toolbar injected sometimes */
+#goog-gt-tt, .goog-te-balloon-frame {
+  display: none !important;
+}
+
+/* Force hide any remaining translate UI */
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}
