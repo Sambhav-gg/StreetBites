@@ -54,7 +54,9 @@ const AnalyticsDashboard = () => {
     const fetchAnalytics = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${STALL_API_END_POINT}/vendor/analytics`);
+        const res = await axios.get(`${STALL_API_END_POINT}/vendor/analytics`, {
+  withCredentials: true
+});
         setSummary(res.data.summary);
         setStallData(res.data.stalls);
 
