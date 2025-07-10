@@ -79,7 +79,7 @@ const VendorStallCard = ({ stall }) => {
     try {
       setIsSavingMenu(true);
       await axios.put(
-        `/api/stalls/menu/${stall._id}`,
+        `${STALL_API_END_POINT}/menu/${stall._id}`,
         { menuItems: validItems },
         { withCredentials: true }
       );
