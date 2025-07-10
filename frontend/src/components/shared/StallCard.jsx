@@ -5,6 +5,7 @@ import { FaHeart, FaRegHeart, FaStar, FaMapMarkerAlt, FaEye } from "react-icons/
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { PERSON_API_END_POINT } from "../utils/constants";
+import { STALL_API_END_POINT } from '../utils/constants';
 
 const StallCard = ({ stall }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const StallCard = ({ stall }) => {
   const handleViewMore = async () => {
     try {
       await axios.put(
-        `/api/stalls/impression/${stall._id}`,
+        `${ STALL_API_END_POINT }/impression/${stall._id}`,
         {},
         { withCredentials: true }
       );
