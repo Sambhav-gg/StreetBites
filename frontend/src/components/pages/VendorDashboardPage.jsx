@@ -14,7 +14,7 @@ import {
   FaStar,
   FaLock
 } from "react-icons/fa";
-import axios from "axios";
+import { toast } from "react-hot-toast";
 import VendorStallCard from "../shared/VendorStallCard";
 
 const sidebarItems = [
@@ -32,7 +32,13 @@ const sidebarItems = [
     emoji: "📊",
     description: "View performance data"
   },
-  
+  { 
+    name: "Settings", 
+    icon: <FaCog />, 
+    route: "/vendor/settings",
+    emoji: "⚙️",
+    description: "Account settings"
+  },
 ];
 
 const VendorDashboardPage = () => {
@@ -54,37 +60,74 @@ const VendorDashboardPage = () => {
         const res = await axios.get("/api/stalls/vendor", {
           withCredentials: true,
         });
-        const stalls = Array.isArray(res.data)
-  ? res.data
-  : Array.isArray(res.data.data)
-    ? res.data.data
-    : [];
-
-setUserStalls(stalls);
         
-        // Calculate stats
-       const totalStalls = stalls.length;
-const totalViews = stalls.reduce((acc, stall) => acc + (stall.views || 0), 0);
-const totalLikes = stalls.reduce((acc, stall) => acc + (stall.likes || 0), 0);
-const avgRating = totalStalls > 0
-  ? (stalls.reduce((acc, stall) => acc + (stall.averageRating || 0), 0) / totalStalls).toFixed(1)
-  : 0;
+        console.log('API Response:', res.data); // Debug log
+        
+        // Handle different response structures
+        let stallsData = [];
+        if (Array.isArray(res.data)) {
+          stallsData = res.data;
+        } else if (res.data && Array.isArray(res.data.stalls)) {
+          stallsData = res.data.stalls;
+        } else if (res.data && typeof res.data === 'object') {
+          // If response is an object but not an array, treat as empty
+          console.warn('Unexpected API response structure:', res.data);
+          stallsData = [];
+        }
+        
+        setUserStalls(stallsData);
+        
+        // Calculate stats with proper validation
+        const totalStalls = stallsData.length;
+        const totalViews = stallsData.reduce((acc, stall) => {
+          const views = stall.views || stall.impressions?.length || 0;
+          return acc + views;
+        }, 0);
+        const totalLikes = stallsData.reduce((acc, stall) => {
+          const likes = Array.isArray(stall.likes) ? stall.likes.length : (stall.likes || 0);
+          return acc + likes;
+        }, 0);
+        const avgRating = totalStalls > 0 
+          ? (stallsData.reduce((acc, stall) => acc + (stall.averageRating || 0), 0) / totalStalls).toFixed(1)
+          : 0;
+        
+        setStats({
+          totalStalls,
+          totalViews,
+          totalLikes,
+          averageRating: avgRating
+        });
 
-setStats({
-  totalStalls,
-  totalViews,
-  totalLikes,
-  averageRating: avgRating
-});
+        console.log('Stats calculated:', { totalStalls, totalViews, totalLikes, avgRating });
+        
       } catch (err) {
         console.error("Failed to fetch vendor stalls", err);
+        
+        // Check if it's an authentication error
+        if (err.response?.status === 401) {
+          toast.error("Please login to access your stalls");
+          navigate("/login");
+        } else if (err.response?.status === 403) {
+          toast.error("You don't have permission to access vendor stalls");
+        } else {
+          toast.error("Failed to load your stalls. Please try again.");
+        }
+        
+        // Set empty array and default stats on error
+        setUserStalls([]);
+        setStats({
+          totalStalls: 0,
+          totalViews: 0,
+          totalLikes: 0,
+          averageRating: 0
+        });
       } finally {
         setLoading(false);
       }
     };
 
     fetchStalls();
-  }, []);
+  }, [navigate]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
