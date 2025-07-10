@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import VendorStallCard from "../shared/VendorStallCard";
+import axios from "axios";
 
 const sidebarItems = [
   { 
