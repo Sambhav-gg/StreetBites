@@ -1,10 +1,10 @@
-export const USER_API_END_POINT = "http://localhost:5001/api/auth";
+export const USER_API_END_POINT = "https://streetbites-5glu.onrender.com/api/auth";
 
-export const PERSON_API_END_POINT = "http://localhost:5001/api/person";
+export const PERSON_API_END_POINT = "https://streetbites-5glu.onrender.com/api/person";
 
-export const STALL_API_END_POINT = "http://localhost:5001/api/stalls";
+export const STALL_API_END_POINT = "https://streetbites-5glu.onrender.com/api/stalls";
 
-export const REVIEW_API_END_POINT = "http://localhost:5001/api/reviews";
+export const REVIEW_API_END_POINT = "https://streetbites-5glu.onrender.com/api/reviews";
 
 
 // src/utils/constants.js
