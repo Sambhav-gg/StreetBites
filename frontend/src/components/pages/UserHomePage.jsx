@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLocation } from "../redux/locationSlice";
 import { STALL_API_END_POINT } from "../utils/constants";
+import { PERSON_API_END_POINT } from "../utils/constants";
 
 const UserHomePage = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
@@ -83,7 +84,7 @@ const UserHomePage = () => {
             break;
 
           case "liked":
-            res = await axios.get(`/api/person/liked-stalls`);
+            res = await axios.get(`${ PERSON_API_END_POINT }/liked-stalls`);
             break;
 
           default:
