@@ -55,7 +55,7 @@ const StallDetailPage = () => {
   const fetchStall = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${STALL_API_END_POINT}/api/stalls/${id}`);
+      const res = await axios.get(`${STALL_API_END_POINT}/${id}`);
       setStall(res.data);
     } catch (err) {
       console.error("Failed to load stall details", err.message);
