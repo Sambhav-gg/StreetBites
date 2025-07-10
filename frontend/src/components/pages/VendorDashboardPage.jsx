@@ -54,7 +54,13 @@ const VendorDashboardPage = () => {
         const res = await axios.get("/api/stalls/vendor", {
           withCredentials: true,
         });
-        setUserStalls(res.data);
+        const stalls = Array.isArray(res.data)
+  ? res.data
+  : Array.isArray(res.data.data)
+    ? res.data.data
+    : [];
+
+setUserStalls(stalls);
         
         // Calculate stats
         const totalStalls = res.data.length;
