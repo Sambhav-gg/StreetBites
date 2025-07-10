@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input";
 import { IndianRupee, X, Save, Trash2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
-
+import { STALL_API_END_POINT } from "../utils/constants";
 const VendorStallCard = ({ stall }) => {
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ const VendorStallCard = ({ stall }) => {
 
     try {
       setIsDeleting(true);
-      await axios.delete(`/api/stalls/delete/${stall._id}`, {
+      await axios.delete(`${ STALL_API_END_POINT }/delete/${stall._id}`, {
         withCredentials: true,
       });
 
