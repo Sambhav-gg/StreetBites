@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import StallCard from "../shared/StallCard"; // Adjust path as needed
-
+import { PERSON_API_END_POINT } from "../utils/constants";
 const LikedByYou = () => {
   const [likedStalls, setLikedStalls] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchLikedStalls = async () => {
     try {
-      const res = await axios.get("/api/person/liked-stalls");
+      const res = await axios.get(`${ PERSON_API_END_POINT }/liked-stalls`);
       setLikedStalls(res.data || []);
     } catch (error) {
       console.error("Failed to fetch liked stalls:", error.message);
