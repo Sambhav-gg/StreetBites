@@ -19,8 +19,10 @@ const PORT = process.env.PORT || 5001;
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
+    origin: ["https://street-bites-rho.vercel.app","http://localhost:5173"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['set-cookie']
 }));
 
 // API Routes
