@@ -22,7 +22,7 @@ app.use(cors({
     origin: ["https://street-bites-rho.vercel.app","http://localhost:5173"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['set-cookie']
+    exposedHeaders: ['set-cookie'],
     credentials: true,
 }));
 
