@@ -17,6 +17,8 @@ import {
 import { toast } from "react-hot-toast";
 import VendorStallCard from "../shared/VendorStallCard";
 import axios from "axios";
+import { STALL_API_END_POINT } from "../utils/constants";
+
 
 const sidebarItems = [
   { 
@@ -58,7 +60,7 @@ const VendorDashboardPage = () => {
     const fetchStalls = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("/api/stalls/vendor", {
+        const res = await axios.get(`${STALL_API_END_POINT}/vendor`, {
           withCredentials: true,
         });
         
