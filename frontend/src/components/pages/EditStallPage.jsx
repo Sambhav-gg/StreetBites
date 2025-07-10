@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-
+import { STALL_API_END_POINT } from "../utils/constants";
 const EditStallPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ const EditStallPage = () => {
       });
 
       // Save menu separately
-      await axios.put(`/api/stalls/menu/${id}`, { menuItems }, {
+      await axios.put(`${STALL_API_END_POINT}/menu/${id}`, { menuItems }, {
         withCredentials: true,
       });
 
