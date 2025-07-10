@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5001;
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-    origin: ['http://localhost:5173','https://street-bites-rho.vercel.app/']
+    origin: 'http://localhost:5173',
     credentials: true,
 }));
 
