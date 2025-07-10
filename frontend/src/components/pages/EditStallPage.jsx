@@ -50,7 +50,7 @@ const EditStallPage = () => {
     otherImages.forEach(file => formData.append("otherImages", file));
 
     try {
-      const res = await axios.put(`/api/stalls/update/${id}`, formData, {
+      const res = await axios.put(`${STALL_API_END_POINT}/update/${id}`, formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });
