@@ -27,6 +27,7 @@ import {
   ArrowLeft,
   Star
 } from "lucide-react";
+import { STALL_API_END_POINT } from "../utils/constants";
 
 const categories = [
   "North Indian", "South Indian", "Chinese", "Street Food", "Fast Food", "Snacks & Chaat",
@@ -165,7 +166,7 @@ const AddStallPage = () => {
     otherImages.forEach((file) => formData.append("otherImages", file));
 
     try {
-      const res = await axios.post("/api/stalls/create", formData, {
+      const res = await axios.post(`${STALL_API_END_POINT}/create`, formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });
