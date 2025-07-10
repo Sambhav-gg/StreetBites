@@ -44,30 +44,28 @@ const Login = () => {
     };
 
     const handleVerifyOtp = async (e) => {
-        e.preventDefault();
-      
-        if (!otp) return toast.error("Please enter the OTP");
-      
-        try {
-          const res = await axios.post(
+    e.preventDefault();
+
+    if (!otp) return toast.error("Please enter the OTP");
+
+    try {
+        const res = await axios.post(
             `${USER_API_END_POINT}/verify-otp`,
             { sessionId, otp },
             { withCredentials: true }
-          );
-      
-         if (res.data?.user?.role) {
-  dispatch(setAuthUser(res.data.user));
-  toast.success("Logged in successfully");
+        );
 
-  const { role } = res.data.user;
-  navigate(role === "vendor" ? "/vendor/home" : "/user/home");
-}
+        if (res.data?.user?.role) {
+            dispatch(setAuthUser(res.data.user));
+            toast.success("Logged in successfully");
 
-          }
-        } catch (err) {
-          toast.error(err.response?.data?.message || "Error verifying OTP");
+            const { role } = res.data.user;
+            navigate(role === "vendor" ? "/vendor/home" : "/user/home");
         }
-    };
+    } catch (err) {
+        toast.error(err.response?.data?.message || "Error verifying OTP");
+    }
+};
       
     return (
         <div className="min-h-screen bg-gradient-to-br from-orange-100 via-yellow-50 to-amber-100 relative overflow-hidden flex items-center justify-center p-4">
