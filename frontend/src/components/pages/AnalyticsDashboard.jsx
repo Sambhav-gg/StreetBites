@@ -18,7 +18,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
+import { STALL_API_END_POINT } from "../utils/constants";
 const COLORS = ['#fb923c', '#34d399', '#fbbf24', '#f87171', '#a78bfa', '#38bdf8'];
 
 const renderActiveShape = (props) => {
@@ -54,7 +54,7 @@ const AnalyticsDashboard = () => {
     const fetchAnalytics = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('/api/stalls/vendor/analytics');
+        const res = await axios.get(`${STALL_API_END_POINT}/vendor/analytics`);
         setSummary(res.data.summary);
         setStallData(res.data.stalls);
 
