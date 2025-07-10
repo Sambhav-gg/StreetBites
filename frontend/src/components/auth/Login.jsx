@@ -55,15 +55,14 @@ const Login = () => {
             { withCredentials: true }
           );
       
-          if (res.data.token) {
-            dispatch(setAuthUser(res.data.user));
-            toast.success("Logged in successfully");
-      
-            if (res.data.user.role === "vendor") {
-              navigate("/vendor/home");
-            } else {
-              navigate("/user/home");
-            }
+         if (res.data?.user?.role) {
+  dispatch(setAuthUser(res.data.user));
+  toast.success("Logged in successfully");
+
+  const { role } = res.data.user;
+  navigate(role === "vendor" ? "/vendor/home" : "/user/home");
+}
+
           }
         } catch (err) {
           toast.error(err.response?.data?.message || "Error verifying OTP");
