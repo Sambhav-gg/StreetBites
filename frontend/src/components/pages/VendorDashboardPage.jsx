@@ -63,19 +63,19 @@ const VendorDashboardPage = () => {
 setUserStalls(stalls);
         
         // Calculate stats
-        const totalStalls = res.data.length;
-        const totalViews = res.data.reduce((acc, stall) => acc + (stall.views || 0), 0);
-        const totalLikes = res.data.reduce((acc, stall) => acc + (stall.likes || 0), 0);
-        const avgRating = totalStalls > 0 
-          ? (res.data.reduce((acc, stall) => acc + (stall.averageRating || 0), 0) / totalStalls).toFixed(1)
-          : 0;
-        
-        setStats({
-          totalStalls,
-          totalViews,
-          totalLikes,
-          averageRating: avgRating
-        });
+       const totalStalls = stalls.length;
+const totalViews = stalls.reduce((acc, stall) => acc + (stall.views || 0), 0);
+const totalLikes = stalls.reduce((acc, stall) => acc + (stall.likes || 0), 0);
+const avgRating = totalStalls > 0
+  ? (stalls.reduce((acc, stall) => acc + (stall.averageRating || 0), 0) / totalStalls).toFixed(1)
+  : 0;
+
+setStats({
+  totalStalls,
+  totalViews,
+  totalLikes,
+  averageRating: avgRating
+});
       } catch (err) {
         console.error("Failed to fetch vendor stalls", err);
       } finally {
