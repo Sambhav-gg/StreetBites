@@ -128,19 +128,37 @@ const UserHomePage = () => {
   };
 
   const getEmptyStateMessage = () => {
-    if (selectedFilter === "liked") return "You haven't liked any stalls yet.";
-    if (selectedFilter === "top-rated") return "No top-rated stalls available right now.";
-    if (selectedFilter === "all") return "No stalls available right now.";
+    if (selectedFilter === "liked") return "You haven't liked any stalls yet. Start exploring to find your favorites! ❤️";
+    if (selectedFilter === "top-rated") return "No top-rated stalls available right now. Check back soon! ⭐";
+    if (selectedFilter === "all") return "No stalls available right now. Be the first vendor to join! 🏪";
     if (selectedFilter === "nearby" && locationDenied) return "";
-    return "No stalls found.";
+    return "No stalls found matching your search. Try different keywords! 🔍";
+  };
+
+  const getFilterTitle = () => {
+    switch (selectedFilter) {
+      case "all": return "🌟 All Amazing Stalls";
+      case "nearby": return "📍 Stalls Near You";
+      case "top-rated": return "⭐ Top-Rated Favorites";
+      case "liked": return "❤️ Your Liked Stalls";
+      default: return "🍛 Discover Street Food";
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/40 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-yellow-50 to-amber-50 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Floating Food Emojis */}
+        <div className="absolute top-32 left-20 text-6xl opacity-8 animate-bounce">🍛</div>
+        <div className="absolute top-1/3 right-32 text-5xl opacity-10 animate-bounce delay-300">🌮</div>
+        <div className="absolute bottom-1/4 left-40 text-7xl opacity-6 animate-bounce delay-600">🥘</div>
+        <div className="absolute bottom-32 right-20 text-4xl opacity-12 animate-bounce delay-900">🍜</div>
+        <div className="absolute top-1/2 left-10 text-3xl opacity-15 animate-bounce delay-1200">🥙</div>
+        
+        {/* Gradient Blobs */}
         <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
+          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-orange-300/15 to-yellow-300/10 rounded-full blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, 180, 360],
@@ -152,7 +170,7 @@ const UserHomePage = () => {
           }}
         />
         <motion.div
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-emerald-400/10 to-cyan-400/10 rounded-full blur-3xl"
+          className="absolute -bottom-40 -left-40 w-96 h-96 bg-gradient-to-tr from-amber-300/15 to-orange-400/10 rounded-full blur-3xl"
           animate={{
             scale: [1.2, 1, 1.2],
             rotate: [360, 180, 0],
@@ -171,10 +189,30 @@ const UserHomePage = () => {
         <Sidebar selected={selectedFilter} onSelect={setSelectedFilter} />
 
         <div className="flex-1 px-8 py-6">
+          {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
+            className="mb-8"
+          >
+            <div className="bg-gradient-to-r from-white/70 to-orange-50/50 backdrop-blur-sm rounded-2xl p-6 border border-white/50 shadow-lg">
+              <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-amber-500 mb-2">
+                {getFilterTitle()}
+              </h1>
+              <p className="text-gray-600 font-medium">
+                {searchTerm && `Searching for "${searchTerm}" • `}
+                {selectedCity && `In ${selectedCity.label} • `}
+                {Array.isArray(stalls) && stalls.length > 0 ? `${stalls.length} stalls found` : 'Discover amazing street food vendors'}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Search Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
           >
             <SearchBar
               searchTerm={searchTerm}
@@ -185,6 +223,7 @@ const UserHomePage = () => {
             />
           </motion.div>
 
+          {/* Location Denied Message */}
           <AnimatePresence mode="wait">
             {selectedFilter === "nearby" && locationDenied && (
               <motion.div
@@ -192,20 +231,26 @@ const UserHomePage = () => {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: -20 }}
                 transition={{ duration: 0.4 }}
-                className="text-center my-8"
+                className="my-8"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-pink-500 rounded-full mb-4 shadow-lg">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
+                <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-8 text-center">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-500 to-pink-500 rounded-full mb-4 shadow-lg">
+                    <div className="text-4xl">📍</div>
+                  </div>
+                  <h3 className="text-2xl font-bold text-red-700 mb-3">Location Access Required</h3>
+                  <p className="text-red-600 text-lg mb-4">Please allow location access to discover amazing stalls near you!</p>
+                  <button 
+                    onClick={() => window.location.reload()} 
+                    className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold hover:from-red-600 hover:to-pink-600 transition-all duration-200 shadow-lg"
+                  >
+                    🔄 Try Again
+                  </button>
                 </div>
-                <p className="text-lg font-semibold text-gray-700 mb-2">Location Access Required</p>
-                <p className="text-gray-500">Please allow location access to discover nearby stalls</p>
               </motion.div>
             )}
           </AnimatePresence>
 
+          {/* Content Grid */}
           <AnimatePresence mode="wait">
             {isLoading ? (
               <motion.div
@@ -221,14 +266,14 @@ const UserHomePage = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20"
+                    className="bg-gradient-to-br from-white/80 to-orange-50/50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/30"
                   >
                     <div className="animate-pulse space-y-4">
-                      <div className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 h-32 rounded-xl bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                      <div className="bg-gradient-to-r from-orange-200 via-amber-200 to-yellow-200 h-40 rounded-xl bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
                       <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 h-4 rounded bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
-                        <div className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 h-3 rounded w-3/4 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
-                        <div className="bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 h-3 rounded w-1/2 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                        <div className="bg-gradient-to-r from-orange-200 via-amber-200 to-yellow-200 h-4 rounded bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                        <div className="bg-gradient-to-r from-orange-200 via-amber-200 to-yellow-200 h-3 rounded w-3/4 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
+                        <div className="bg-gradient-to-r from-orange-200 via-amber-200 to-yellow-200 h-3 rounded w-1/2 bg-[length:200%_100%] animate-[shimmer_1.5s_ease-in-out_infinite]"></div>
                       </div>
                     </div>
                   </motion.div>
@@ -276,14 +321,12 @@ const UserHomePage = () => {
                             repeat: Infinity,
                             ease: "easeInOut"
                           }}
-                          className="w-24 h-24 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full flex items-center justify-center shadow-lg"
+                          className="w-32 h-32 bg-gradient-to-br from-orange-300 to-amber-400 rounded-full flex items-center justify-center shadow-2xl"
                         >
-                          <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                          </svg>
+                          <div className="text-6xl">🔍</div>
                         </motion.div>
                         <motion.div
-                          className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-xl"
+                          className="absolute -inset-4 bg-gradient-to-r from-orange-400/20 to-amber-400/20 rounded-full blur-xl"
                           animate={{
                             opacity: [0.5, 0.8, 0.5],
                             scale: [1, 1.2, 1]
@@ -295,10 +338,20 @@ const UserHomePage = () => {
                           }}
                         />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-700 mb-2">No Results Found</h3>
-                      <p className="text-gray-500 text-center max-w-md leading-relaxed">
+                      <h3 className="text-2xl font-bold text-gray-800 mb-3">No Stalls Found</h3>
+                      <p className="text-gray-600 text-center max-w-md leading-relaxed text-lg">
                         {getEmptyStateMessage()}
                       </p>
+                      {selectedFilter === "all" && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => navigate('/signup')}
+                          className="mt-6 bg-gradient-to-r from-orange-500 to-amber-500 text-white px-8 py-3 rounded-xl font-bold hover:from-orange-600 hover:to-amber-600 transition-all duration-200 shadow-lg"
+                        >
+                          🏪 Become a Vendor
+                        </motion.button>
+                      )}
                     </motion.div>
                   )
                 )}

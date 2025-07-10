@@ -16,9 +16,11 @@ import toast from "react-hot-toast";
 import { Toaster } from "react-hot-toast";
 import AnalyticsDashboard from "./components/pages/AnalyticsDashboard";
 import VendorDashboardPage from "./components/pages/VendorDashboardPage";
+import ScrollToTop from "./components/utils/ScrollToTop";
 function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         {/* ---------- Public Routes ---------- */}

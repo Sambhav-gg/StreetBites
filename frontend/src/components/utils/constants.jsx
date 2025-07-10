@@ -4,6 +4,9 @@ export const PERSON_API_END_POINT = "http://localhost:5001/api/person";
 
 export const STALL_API_END_POINT = "http://localhost:5001/api/stalls";
 
+export const REVIEW_API_END_POINT = "http://localhost:5001/api/reviews";
+
+
 // src/utils/constants.js
 
 
