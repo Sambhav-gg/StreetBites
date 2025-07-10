@@ -16,7 +16,7 @@ import {
 import ImageSlider from "../pages/ImageSlider";
 import ReviewsPopover from "./ReviewsPopover";
 import StallMenuDrawer from "./StallMenuDrawer";
-
+import { STALL_API_END_POINT } from "../utils/constants";
 const StallDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const StallDetailPage = () => {
   const fetchStall = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`/api/stalls/${id}`);
+      const res = await axios.get(`${STALL_API_END_POINT}/api/stalls/${id}`);
       setStall(res.data);
     } catch (err) {
       console.error("Failed to load stall details", err.message);
