@@ -32,6 +32,7 @@ const multipleUpload = upload.fields([
 router.post("/create", protect, onlyVendor, multipleUpload, createStall);
 router.delete('/delete/:id', protect, deleteStall);
 // Public and Vendor routes
+router.get('/:id', getStallById);
 router.get("/all", getAllStalls); 
 router.get("/my", protect, onlyVendor, getMyStall); 
 router.put("/menu/:id", protect, onlyVendor, updateMenu); 
