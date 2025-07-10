@@ -303,6 +303,7 @@
 
 // export default ReviewsPopover;
 
+import { REVIEW_API_END_POINT } from '../utils/constants';
 
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -387,7 +388,7 @@ const ReviewsPopover = ({ stallId, reviews = [], onReviewAdded }) => {
     try {
       setSubmitting(true);
       await axios.post(
-        `/api/reviews`,
+        `${ REVIEW_API_END_POINT }`,
         { comment: comment.trim(), rating: Number(rating), stallId },
         { withCredentials: true }
       );
