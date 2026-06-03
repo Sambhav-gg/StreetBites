@@ -7,7 +7,7 @@ export const REVIEW_API_END_POINT = `${BASE_URL}/api/reviews`;
 
 
 
-// src/utils/constants.js
+// src/utils/constants.j
 
 
 
